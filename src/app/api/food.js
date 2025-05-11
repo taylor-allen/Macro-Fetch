@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   });
 
   const response = await fetch(
-    `https://platform.fatsecret.com/rest/foods/search/v3?${params}`,
+    `https://platform.fatsecret.com/rest/foods/search/v1?${params}`,
     {
       method: "GET",
       headers: {
