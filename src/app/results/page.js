@@ -3,6 +3,18 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ResultList from "../components/resultsList";
 
+function getLowCal(foods) {
+  const calArray = foods.map((food) => {
+    const afterLabel = food.food_description.split("Calories: ")[1];
+    const digits = afterLabel.split("kcal")[0];
+    const cal = parseInt(digits);
+    return { food, cal };
+  });
+  calArray.sort((a, b) => a.cal - b.cal);
+
+  return calArray.slice(0, 3).map((item) => item.food);
+}
+
 export default function ResultsPage() {
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("searchTerm") || "";
@@ -25,7 +37,12 @@ export default function ResultsPage() {
 
       const data = await res.json();
       console.log("Fetched ResultsPage data:", data);
-      setResults(data);
+      // setResults(data);
+      const items = data?.foods.food;
+
+      const lowCal = getLowCal(items);
+      console.log("Here are your low-calorie foods:", lowCal);
+      setResults(lowCal);
     })();
   }, [searchTerm]);
 

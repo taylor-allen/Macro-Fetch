@@ -1,4 +1,3 @@
-// src/app/api/food/route.js
 import { NextResponse } from "next/server";
 
 async function getToken() {
