@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Form = () => {
-  const [region, setRegion] = useState("choose");
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
@@ -13,7 +12,6 @@ const Form = () => {
     if (!searchTerm.trim()) return;
 
     const query = new URLSearchParams({
-      region,
       searchTerm,
     }).toString();
 
@@ -21,26 +19,21 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <select value={region} onChange={(e) => setRegion(e.target.value)}>
-        <option value="choose">Choose a region</option>
-        <option value="US">United States</option>
-        <option value="CA">Canada</option>
-        <option value="MX">Mexico</option>
-        <option value="GB">United Kingdom</option>
-        <option value="FR">France</option>
-        <option value="DE">Germany</option>
-        <option value="IT">Italy</option>
-      </select>
-
+    <form onSubmit={handleSubmit} className="space-y-4 mx-auto">
       <input
         type="text"
-        placeholder="Search food"
+        placeholder="e.g., pho"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
-      <button type="submit">Search</button>
+      <button
+        type="submit"
+        className="w-full text-white bg-blue-500 rounded-md hover:bg-blue-700 transition"
+      >
+        Search
+      </button>
     </form>
   );
 };

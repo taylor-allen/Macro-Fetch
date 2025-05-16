@@ -5,20 +5,18 @@ import ResultList from "../components/resultsList";
 
 export default function ResultsPage() {
   const searchParams = useSearchParams();
-  const region = searchParams.get("region") || "";
   const searchTerm = searchParams.get("searchTerm") || "";
-
-  const [results, setResults] = useState(null);
+  const [error, setError] = useState(false);
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
-    if (!region || !searchTerm) return;
+    if (!searchTerm) return;
 
     (async () => {
-      const res = await fetch(
-        `/api/food?region=${region}&searchTerm=${searchTerm}`
-      );
+      const res = await fetch(`/api/food?searchTerm=${searchTerm}`);
 
-      console.log("Fetch status:", res.status);
+      console.log("Fetch ResultsPage status:", res.status);
+
       if (!res.ok) {
         console.log("Fetch failed; try again: ", res.status);
         setError(true);
@@ -26,20 +24,19 @@ export default function ResultsPage() {
       }
 
       const data = await res.json();
-      console.log("Fetched data:", data);
+      console.log("Fetched ResultsPage data:", data);
       setResults(data);
     })();
-  }, [region, searchTerm]);
+  }, [searchTerm]);
 
   return (
     <main className="p-8">
       <h1 className="text-xl font-bold mb-4">
-        Search Results for <strong>{searchTerm}</strong> in{" "}
-        <strong>{region}</strong>
+        Search Results for <strong>{searchTerm}</strong>
       </h1>
 
-      {results === null ? (
-        <p>Something went wrong while fetching results.</p>
+      {error ? (
+        <p>Something went wrong while fetching results. Please try again.</p>
       ) : (
         <ResultList results={results} />
       )}
