@@ -1,4 +1,14 @@
 
+# Macro-Fetch
+
+A minimal Next.js web app where users enter food ingredients, and the app returns the three least calorie-dense foods with basic nutrition info. It uses a public food API (FatSecret), and stores past searches in a local file. Built with React and a Node.js server.
+
+
+## Authors
+
+- [@taylor-allen](https://www.github.com/taylor-allen)
+
+
 ## Prerequisites
 
 1. Create a basic account at https://platform.fatsecret.com/api-editions because you will need to obtain the following:
@@ -24,3 +34,27 @@ FATSECRET_CLIENT_SECRET=your_client_secret
 ```bash
   npm run dev
 ```
+## Usage
+
+- On the home page, type a food name and press Enter or click the Search button.
+- You'll be taken to the Results page which shows the three least calorie-dense matches. 
+
+## Tech Stack
+
+**Client:** 
+- Next.js App Router
+- TailwindCSS
+- Fetch API
+- React Hooks
+
+**Server:** 
+- Next.js API Routes `(src/app/api/food/route.js)`
+- Node.js Fetch for OAuth2 token & FatSecret `foods.search` calls.
+
+
+## Features
+
+- Search any ingredient by name using the simple search form
+- Displays the three lowest calorie results
+- Stores search history
+
